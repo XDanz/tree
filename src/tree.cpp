@@ -78,9 +78,9 @@ Tree& Tree::operator=(const Tree& t) {
 }
 
 bool Tree::operator==(const Tree& t) const {
-    if ( nodes.size() != t.nodes.size())
+    if (nodes.size() != t.nodes.size())
         return false;
-    
+
     list<Node*>::const_iterator tlit = t.nodes.begin();
     for (list<Node*>::const_iterator lit = nodes.begin(); lit!= nodes.end(); lit++, tlit++ ) {
         if ( (*lit)->value != (*tlit)->value )
@@ -99,7 +99,7 @@ void Tree::clear() {
     }
     nodes.clear();
 }
-    
+
 bool Tree::empty() const {
     return nodes.empty();
 }
@@ -137,12 +137,12 @@ int Tree::internal_height(Node* p) const {
 
     if (plist.empty())
         return 0;
-  
+
     int h0 = 0;
 
     for (auto node : plist) {
         int h1 = internal_height(node);
-        if ( h1 > h0)
+        if (h1 > h0)
             h0 = h1;
     }
     return h0+1;
@@ -191,7 +191,7 @@ list<Tree::Node*> Tree::level(int n) {
 
     if (n == 0)
         return list<Tree::Node*>(1,root);
-    
+
     q.push(&(root->children));
     while (!q.empty()) {
         std::list<Node*>* p = q.front();
@@ -226,7 +226,7 @@ Tree::Iterator::Iterator() {
 }
 
 Tree::Iterator::Iterator(const Iterator& it) :
-    tree(it.tree), lit(it.lit) {
+        tree(it.tree), lit(it.lit) {
 }
 
 Tree::Iterator::Iterator(Tree* tree, Node* p) : tree(tree) {
@@ -235,8 +235,8 @@ Tree::Iterator::Iterator(Tree* tree, Node* p) : tree(tree) {
 }
 
 Tree::Iterator::Iterator(Tree* tree, list<Node*>::iterator it) :
-    tree(tree), lit(it) {
-  
+        tree(tree), lit(it) {
+
 }
 
 Tree::Iterator Tree::begin() {
