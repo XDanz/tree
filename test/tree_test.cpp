@@ -31,3 +31,26 @@ TEST(Simple, equal) {
     EXPECT_EQ(3, cpy->size());
     EXPECT_EQ(true, *t == *cpy);
 }
+
+
+TEST(Simple, height) {
+
+    std::list<Tree*> list_c;
+    list_c.push_back(new Tree("C1"));
+    list_c.push_back(new Tree("C2"));
+    list_c.push_back(new Tree("C3"));
+    Tree* tc = new Tree("C0", list_c);
+
+    std::list<Tree*> list_d;
+    list_d.push_back(new Tree("D1"));
+    list_d.push_back(new Tree("D2"));
+    list_d.push_back(new Tree("D3"));
+    Tree* td = new Tree("D0", list_d);
+
+    std::list<Tree*> list;
+    list.push_back(tc);
+    list.push_back(td);
+    Tree* cpy = new Tree("A", list);
+    EXPECT_EQ(2, cpy->height());
+    EXPECT_EQ(9, cpy->size());
+}
