@@ -1,0 +1,15 @@
+
+.idea/
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+Makefile
+cmake_install.cmake
+ext/gtest/CMakeFiles/
+ext/gtest/Makefile
+ext/gtest/cmake_install.cmake
+Would skip repository ext/gtest/src/googletest
+ext/gtest/src/googletest-build
+ext/gtest/src/googletest-stamp
+ext/gtest/tmp/
+ext/gtest/src/
