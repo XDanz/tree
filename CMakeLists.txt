@@ -27,7 +27,7 @@ include_directories(${GTEST_INCLUDE_DIRS} ${COMMON_INCLUDES})
 
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cpp)
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
-add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES} ${SRC_FILES})
+add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES} ${SRC_FILES} test/tree_test.cpp)
 MESSAGE( STATUS "(PROJECT_TEST_NAME):" ${PROJECT_TEST_NAME})
 MESSAGE( STATUS "(TEST_SRC_FILES):" ${TEST_SRC_FILES} )
 add_dependencies(${PROJECT_TEST_NAME} googletest)
