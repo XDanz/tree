@@ -5,9 +5,15 @@
 #include <queue>
 #include "Tree.h"
 
-using namespace std;
-
-Tree::Node::Node(string x, Node* p): value(x), parent(p) {
+/*!
+ * Constructor of a node.
+ *
+ * @param x [in] The value of x
+ * @param p [in] The parent of the node. If null then the node will have no parent
+ *
+ * @return
+ */
+Tree::Node::Node(std::string x, Node* p): value(x), parent(p) {
     if (!parent)
         parent = this;
 }
@@ -16,11 +22,14 @@ Tree::Node::Node(string x, Node* p): value(x), parent(p) {
 Tree::Tree() {
 }
 
-Tree::Tree(const string& x) {
+Tree::Tree(const std::string& x) {
     nodes.push_back(new Node(x));
 }
 
-// cpy constructor
+/*!
+ * Copy constructor
+ * @param tree [in] The tree to copy
+ */
 Tree::Tree(const Tree& tree)
 {
     if (tree.nodes.empty())
@@ -28,8 +37,12 @@ Tree::Tree(const Tree& tree)
     tree_clone(tree.nodes.front(), nodes, 0);
 }
 
-// Constructor. Add the list as the children of x
-Tree::Tree(const string& x, const list<Tree*>& list)
+/*!
+ * Constructor. Add the list as the children of x
+ * @param x [in] The value to set the node
+ * @param list [in] List of children to be added to x
+ */
+Tree::Tree(const std::string& x, const std::list<Tree*>& list)
 {
     Node *root = new Node(x);
     nodes.push_back(root);
@@ -49,7 +62,7 @@ Tree::Tree(const string& x, const list<Tree*>& list)
 }
 
 // p copy to (dest), nodes - copy from (src)
-Tree::Node* Tree::tree_clone(Node* p, list<Node*>& nodes, Node* parent)
+Tree::Node* Tree::tree_clone(Node* p, std::list<Node*>& nodes, Node* parent)
 {
     Node* cp = new Node(p->value, parent);
     nodes.push_back(cp);
@@ -81,8 +94,8 @@ bool Tree::operator==(const Tree& t) const {
     if (nodes.size() != t.nodes.size())
         return false;
 
-    list<Node*>::const_iterator tlit = t.nodes.begin();
-    for (list<Node*>::const_iterator lit = nodes.begin(); lit!= nodes.end(); lit++, tlit++ ) {
+    std::list<Node*>::const_iterator tlit = t.nodes.begin();
+    for (std::list<Node*>::const_iterator lit = nodes.begin(); lit!= nodes.end(); lit++, tlit++ ) {
         if ( (*lit)->value != (*tlit)->value )
             return false;
     }
@@ -170,17 +183,17 @@ void Tree::print()  {
     int h = height();
     for ( int level=0; level<=h; level++)
         print(level);
-    cout << "\n";
+    std::cout << "\n";
 }
 
 void Tree::print(int n)  {
     std::list<Node*> level_nodes = level(n);
     for (auto node: level_nodes)
-        cout << (node)->value << " ";
+        std::cout << (node)->value << " ";
 }
 
 // protected members
-list<Tree::Node*> Tree::level(int n) {
+std::list<Tree::Node*> Tree::level(int n) {
     std::list<Node*> listn;
 
     if (empty())
@@ -190,7 +203,7 @@ list<Tree::Node*> Tree::level(int n) {
     Node* root = *(nodes.begin());
 
     if (n == 0)
-        return list<Tree::Node*>(1,root);
+        return std::list<Tree::Node*>(1,root);
 
     q.push(&(root->children));
     while (!q.empty()) {
@@ -209,15 +222,24 @@ list<Tree::Node*> Tree::level(int n) {
 }
 
 
-int Tree::width(int) {
-    return 0; // TODO: Implement
+int Tree::width(int)
+{
+    return 0;
 }
 
-int Tree::width() {
-    return 0; // TODO: Implement
+size_t Tree::width()
+{
+    size_t w = 1;
+    if (nodes.empty())
+        return 0;
+    for (int k = 0; k<= height(); k++) {
+        size_t w1 = level(k).size();
+        if (w1 > w) w = w1;
+    }
+    return w;
 }
 
-string& Tree::root() const {
+std::string& Tree::root() const {
     // TODO: Implement
     return nodes.front()->value;
 }
@@ -234,9 +256,40 @@ Tree::Iterator::Iterator(Tree* tree, Node* p) : tree(tree) {
     lit = find(nodes.begin(), nodes.end(), p);
 }
 
-Tree::Iterator::Iterator(Tree* tree, list<Node*>::iterator it) :
+Tree::Iterator::Iterator(Tree* tree, std::list<Node*>::iterator it) :
         tree(tree), lit(it) {
+}
 
+void Tree::Iterator::operator=(const Tree::Iterator &it) {
+    tree = it.tree;
+    lit = it.lit;
+}
+
+bool Tree::Iterator::operator==(const Tree::Iterator &it) {
+    return tree == it.tree && lit == it.lit;
+}
+
+bool Tree::Iterator::operator!=(const Tree::Iterator &it) {
+    return tree != it.tree || lit != it.lit;
+}
+
+// prefix
+Tree::Iterator& Tree::Iterator::operator++()
+{
+    ++lit;
+    return *this;
+}
+
+Tree::Iterator Tree::Iterator::operator++(int)
+{
+    Tree::Iterator it(*this);
+    ++(*this);
+    return it;
+}
+
+bool Tree::Iterator::operator!()
+{
+    return lit == tree->nodes.end();
 }
 
 Tree::Iterator Tree::begin() {
@@ -245,4 +298,10 @@ Tree::Iterator Tree::begin() {
 
 Tree::Iterator Tree::end() {
     return Iterator(this, *nodes.end());
+}
+
+bool Tree::isRoot(Tree::Iterator it)
+{
+    Node* p = *it.lit;
+    return it.lit == (it.tree->nodes).begin();
 }

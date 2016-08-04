@@ -32,9 +32,30 @@ TEST(Simple, equal) {
     EXPECT_EQ(true, *t == *cpy);
 }
 
+TEST(Simple, test_leaves)
+{
+    std::list<Tree*> list;
+    list.push_back(new Tree("C2"));
+    list.push_back(new Tree("C3"));
+    Tree* t = new Tree("C1", list);
+    EXPECT_EQ(2, t->leaves());
+}
 
-TEST(Simple, height) {
+TEST(Simple, level)
+{
+    std::list<Tree*> list;
+    Tree* c2 = new Tree("C2");
+    list.push_back(c2);
+    Tree* c3 = new Tree("C3");
+    list.push_back(c3);
+    Tree* t = new Tree("C1", list);
+    EXPECT_EQ(1, t->level(c2->begin()));
+    EXPECT_EQ(1, t->level(c3->begin()));
+    EXPECT_EQ(0, t->level(t->begin()));
+}
 
+TEST(Simple, height)
+{
     std::list<Tree*> list_c;
     list_c.push_back(new Tree("C1"));
     list_c.push_back(new Tree("C2"));
@@ -53,4 +74,15 @@ TEST(Simple, height) {
     Tree* cpy = new Tree("A", list);
     EXPECT_EQ(2, cpy->height());
     EXPECT_EQ(9, cpy->size());
+}
+
+TEST(Simple, width)
+{
+    Tree* tc = new Tree("C0", { new Tree("C1"), new Tree("C2"), new Tree("C3") });
+    Tree* td = new Tree("D0", { new Tree("D1"), new Tree("D2"), new Tree("D3") });
+
+    std::list<Tree*> list {tc, td};
+    Tree* root = new Tree("root", list);
+    EXPECT_EQ(6, root->width());
+
 }
