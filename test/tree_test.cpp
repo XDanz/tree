@@ -54,6 +54,26 @@ TEST(Simple, level)
     EXPECT_EQ(0, t->level(t->begin()));
 }
 
+TEST(Simple, isRoot) {
+   Tree* t = new Tree("C1", {new Tree("C2"), new Tree("C3")});
+  Tree::Iterator it = t->begin ();
+  EXPECT_TRUE (Tree::isRoot (it));
+  it++;
+  EXPECT_FALSE (Tree::isRoot (it));
+}
+
+TEST(Simple, Iterator) {
+  Tree* t = new Tree("C1", {new Tree("C2"), new Tree("C3")});
+  std::vector<std::string> actual;
+  std::vector<std::string> expected = { "C1", "C2", "C3"};
+  for (auto item: *t) {
+      actual.push_back (item);
+    }
+
+  EXPECT_TRUE (actual == expected);
+
+}
+
 TEST(Simple, height)
 {
     std::list<Tree*> list_c;

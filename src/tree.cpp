@@ -75,7 +75,7 @@ Tree::Node* Tree::tree_clone(Node* p, std::list<Node*>& nodes, Node* parent)
   std::list<Node*>& l = p->children;
   std::list<Node*>& cl = cp->children;
 
-  /// Iterate over all children of the node and clone each
+  /// Iterate over all children of the node that needs to cpy and clone each
   /// subtree and make cp the new parent
   for (auto child: l)
     cl.push_back( tree_clone(child, nodes, cp));
@@ -125,7 +125,7 @@ bool Tree::empty() const {
   return nodes.empty();
 }
 
-size_t Tree::size() const {
+size_t Tree::size() const noexcept {
   return (unsigned int) nodes.size();
 }
 
@@ -305,11 +305,14 @@ Tree::Iterator Tree::begin() {
 }
 
 Tree::Iterator Tree::end() {
-  return Iterator(this, *nodes.end());
+  return Iterator(this, nodes.end());
 }
 
 bool Tree::isRoot(Tree::Iterator it)
 {
-  Node* p = *it.lit;
   return it.lit == (it.tree->nodes).begin();
+}
+bool Tree::isLeaf (Tree::Iterator it)
+{
+  return (*it.lit)->children.empty ();
 }
