@@ -10,6 +10,13 @@ TEST(Simple, tree_is_root)
     EXPECT_EQ("C1", t->root());
 }
 
+TEST(Simple, eq)
+{
+  Tree t1 = {("C1")};
+  Tree t2 = {("C1")};
+  EXPECT_EQ (t1, t2);
+
+}
 TEST(Simple, test)
 {
     std::list<Tree*> list;
@@ -30,6 +37,28 @@ TEST(Simple, equal) {
     EXPECT_EQ(1, cpy->height());
     EXPECT_EQ(3, cpy->size());
     EXPECT_EQ(true, *t == *cpy);
+}
+
+
+
+TEST(Simple, initializer)
+{
+  Tree t = { "C0", {"C1", "C2"}};
+  Tree::Iterator it = t.begin ();
+  EXPECT_EQ ("C0", *it++);
+  EXPECT_EQ ("C1", *it++);
+  EXPECT_EQ ("C2", *it++);
+  ASSERT_EQ (t.end() , it);
+
+  std::list<Tree*> children = { &t };
+  Tree *t2 = new Tree("root", children);
+  it = t2->begin ();
+  EXPECT_EQ ("root", *it++);
+  EXPECT_EQ ("C0", *it++);
+  EXPECT_EQ ("C1", *it++);
+  EXPECT_EQ ("C2", *it++);
+  EXPECT_TRUE (t2->end () == it);
+
 }
 
 TEST(Simple, test_leaves)

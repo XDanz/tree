@@ -62,6 +62,21 @@ Tree::Tree(const std::string& x, const std::list<Tree*>& list)
     }
 }
 
+Tree::Tree (const std::string& x, const std::initializer_list<std::string>& list)
+{
+  /// Create the root node
+  Node *root = new Node(x);
+  nodes.push_back(root);
+
+  for (const auto node: list) {
+      Node *child = new Node(node, root);
+      root->children.push_back(child);
+      nodes.push_back (child);   //append *tp's nodes
+    }
+
+}
+
+
 /// p copy to (dest), nodes - copy from (src)
 /// At the first call parent = 0, p represent the root node of the tree
 /// that is copied, nodes is passed for each recursion so we could
@@ -273,7 +288,7 @@ void Tree::Iterator::operator=(const Tree::Iterator &it) {
   lit = it.lit;
 }
 
-bool Tree::Iterator::operator==(const Tree::Iterator &it) {
+bool Tree::Iterator::operator==(const Tree::Iterator &it) const {
   return tree == it.tree && lit == it.lit;
 }
 
