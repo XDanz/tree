@@ -12,9 +12,9 @@ TEST(Simple, tree_is_root)
 
 TEST(Simple, eq)
 {
-  Tree t1 = {("C1")};
-  Tree t2 = {("C1")};
-  EXPECT_EQ (t1, t2);
+    Tree t1 = {("C1")};
+    Tree t2 = {("C1")};
+    EXPECT_EQ (t1, t2);
 
 }
 TEST(Simple, test)
@@ -39,25 +39,23 @@ TEST(Simple, equal) {
     EXPECT_EQ(true, *t == *cpy);
 }
 
-
-
 TEST(Simple, initializer)
 {
-  Tree t = { "C0", {"C1", "C2"}};
-  Tree::Iterator it = t.begin ();
-  EXPECT_EQ ("C0", *it++);
-  EXPECT_EQ ("C1", *it++);
-  EXPECT_EQ ("C2", *it++);
-  ASSERT_EQ (t.end() , it);
+    Tree t = { "C0", {"C1", "C2"}};
+    Tree::Iterator it = t.begin ();
+    EXPECT_EQ ("C0", *it++);
+    EXPECT_EQ ("C1", *it++);
+    EXPECT_EQ ("C2", *it++);
+    ASSERT_EQ (t.end() , it);
 
-  std::list<Tree*> children = { &t };
-  Tree *t2 = new Tree("root", children);
-  it = t2->begin ();
-  EXPECT_EQ ("root", *it++);
-  EXPECT_EQ ("C0", *it++);
-  EXPECT_EQ ("C1", *it++);
-  EXPECT_EQ ("C2", *it++);
-  EXPECT_TRUE (t2->end () == it);
+    std::list<Tree*> children = { &t };
+    Tree *t2 = new Tree("root", children);
+    it = t2->begin ();
+    EXPECT_EQ ("root", *it++);
+    EXPECT_EQ ("C0", *it++);
+    EXPECT_EQ ("C1", *it++);
+    EXPECT_EQ ("C2", *it++);
+    EXPECT_TRUE (t2->end () == it);
 
 }
 
@@ -84,22 +82,22 @@ TEST(Simple, level)
 }
 
 TEST(Simple, isRoot) {
-   Tree* t = new Tree("C1", {new Tree("C2"), new Tree("C3")});
-  Tree::Iterator it = t->begin ();
-  EXPECT_TRUE (Tree::isRoot (it));
-  it++;
-  EXPECT_FALSE (Tree::isRoot (it));
+    Tree* t = new Tree("C1", {new Tree("C2"), new Tree("C3")});
+    Tree::Iterator it = t->begin ();
+    EXPECT_TRUE (Tree::isRoot (it));
+    it++;
+    EXPECT_FALSE (Tree::isRoot (it));
 }
 
 TEST(Simple, Iterator) {
-  Tree* t = new Tree("C1", {new Tree("C2"), new Tree("C3")});
-  std::vector<std::string> actual;
-  std::vector<std::string> expected = { "C1", "C2", "C3"};
-  for (auto item: *t) {
-      actual.push_back (item);
+    Tree* t = new Tree("C1", {new Tree("C2"), new Tree("C3")});
+    std::vector<std::string> actual;
+    std::vector<std::string> expected = { "C1", "C2", "C3"};
+    for (auto item: *t) {
+        actual.push_back (item);
     }
 
-  EXPECT_TRUE (actual == expected);
+    EXPECT_TRUE (actual == expected);
 
 }
 
