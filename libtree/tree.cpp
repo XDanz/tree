@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <queue>
-#include "Tree.h"
+#include "tree.h"
 
 /**
  * @brief Constructor of a node.

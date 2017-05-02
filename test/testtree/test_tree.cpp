@@ -2,7 +2,7 @@
 // Created by danter on 2016-08-02.
 //
 #include <gtest/gtest.h>
-#include <Tree.h>
+#include "tree.h"
 
 TEST(Simple, tree_is_root)
 {
