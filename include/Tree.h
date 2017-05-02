@@ -1,6 +1,3 @@
-#include <list>
-#include <string>
-
 /**
  * @file Tree.h
  * @author  Daniel Terranova <daniel.terranova@gmail.com>
@@ -26,38 +23,69 @@
 
 #ifndef TREE_H
 #define TREE_H
-class Tree {
-    /**! @struct Node
-     *   @brief This structure represents a node which is the elements of a tree.
+
+#include <list>
+#include <string>
+
+class Tree
+{
+    /** @struct Node
+     *  @brief This structure represents a node which is the elements of a tree.
+     *  Each node have a list of child nodes and only one parent.
+     *
      *   @var Node::value The actual element being stored in this node.
      *   @var Node::children A list of pointers to this node's child nodes.
      *   @var Node::parent A pointers to this node's parent.
      */
-    struct Node {
+    struct Node
+    {
+        /** @brief Is the value of this node,
+         * the actual element being stored in this node
+         */
         std::string value;
+        /** @brief The children nodes of this node **/
         std::list<Node*> children;
+        /** @brief The parent node of this node **/
         Node* parent;
-        /**!
+
+        /**
          * Constructor of a node.
          *
-         * @param x [in] The value of x
-         * @param p [in] The parent of the node. If null then the node will have no parent
+         * @param x [in] The node value or default
+         * @param p [in] The parent of the node. If null then the node will have no parent, and
+         * will point to itself
          *
          */
         Node(std::string = std::string(), Node* = 0);
     };
-    std::list<Node*> nodes;    /*!< List of pointers to Node objects in preorder */
+    /** @brief List of pointers to all the Node objects in pre order */
+    std::list<Node*> nodes;
 public:
     class Iterator;
     class NodeIterator;
     Tree();
-    /**!
-      * Copy the tree to this tree
+
+    /**
+    * @brief Copy constructor. Copy the entire tree from the given argument <code>tree</code> into this tree
+    * @param tree The tree to copy
+    */
+    Tree(const Tree& tree);
+
+    /**
+     * @brief Constructor of a tree with one element
+     *
+     * @param x The node value
+     */
+    Tree(const std::string& x);
+
+    /**
+      * @brief Constructor. Add the list of <code>Tree</code> as the children of <code>x</code>
+      * into this tree
       *
+      * @param x The value to set the root node
+      * @param list A List of children to be added to the node of the value <code>x</code>
       */
-    Tree(const Tree&);
-    Tree(const std::string&);
-    Tree(const std::string&, const std::list<Tree*>&);
+    Tree(const std::string&, const std::list<Tree*>& list);
     Tree(const std::string&, const std::initializer_list<std::string>&);
 
     ~Tree();
@@ -75,8 +103,9 @@ public:
     void print();
     std::string& root() const;
     /**
-     *  Returns a read iterator that points to the first element in the
-     *  Tree.  Iteration is done in pre-order element order.
+     *  @brief Returns a read iterator that points to the first element in the
+     *  Tree.  Iteration is done in pre-order node element order.
+     *
      *  @return a iterator to this Tree
      */
     Iterator begin();
@@ -100,7 +129,8 @@ public:
     static int numChildren(Iterator it);
 
     // Pre-Order traversal
-    class Iterator {
+    class Iterator
+    {
         Tree* tree;
         std::list<Node*>::iterator lit;
     public:
@@ -111,8 +141,8 @@ public:
         void operator=(const Iterator& it);
         bool operator==(const Iterator& it) const;
         bool operator!=(const Iterator& it);
-        Iterator& operator++();  // prefix operator
-        Iterator  operator++(int); // postfix increment
+        Iterator& operator++();  /** prefix operator **/
+        Iterator  operator++(int); /** postfix increment **/
         std::string& operator*() const {
             return (*lit)->value;
         }
@@ -123,14 +153,14 @@ protected:
     int internal_height(Node* p) const;
     int internal_leaves(Node* p) const;
     int internal_level(Node* p, Iterator it) const;
-    /**!
-      * Recursive function to clone a subtree.
+    /**
+      * @brief Recursive function to clone a subtree.
       *
-      * @param p [in] The root node to copy
+      * @param src_node [in] The root node to copy
       * @param nodes [in] the nodes of this tree
       * @param parent [in] the parent of p
       */
-    Node* tree_clone(Node* p, std::list<Node*>& nodes, Node* parent);
+    Node* tree_clone(const Node* src_node, std::list<Node*>& nodes, Node* parent);
     std::list<Node*> level(int n);
     std::list<Node*>::iterator litn(Node*);
     std::list<Node*>::iterator litp(Node*);

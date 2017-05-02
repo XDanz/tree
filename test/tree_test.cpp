@@ -101,6 +101,12 @@ TEST(Simple, Iterator) {
 
 }
 
+TEST(Simple_eq_Test, Mock)
+{
+
+
+}
+
 TEST(Simple, height)
 {
     std::list<Tree*> list_c;
