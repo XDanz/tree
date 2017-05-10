@@ -41,7 +41,8 @@ TEST(Simple, equal) {
 
 TEST(Simple, initializer)
 {
-    Tree t = { "C0", {"C1", "C2"}};
+    std::initializer_list<std::string> list = {"C1", "C2"};
+    Tree t = { "C0", list}; //copy list initialization
     Tree::Iterator it = t.begin ();
     EXPECT_EQ ("C0", *it++);
     EXPECT_EQ ("C1", *it++);
@@ -56,7 +57,17 @@ TEST(Simple, initializer)
     EXPECT_EQ ("C1", *it++);
     EXPECT_EQ ("C2", *it++);
     EXPECT_TRUE (t2->end () == it);
+}
 
+TEST(Simple, direct_initializer)
+{
+    std::initializer_list<std::string> list = {"C1", "C2"};
+    Tree t { "C0", list}; //direct list initialization
+    Tree::Iterator it = t.begin ();
+    EXPECT_EQ ("C0", *it++);
+    EXPECT_EQ ("C1", *it++);
+    EXPECT_EQ ("C2", *it++);
+    ASSERT_EQ (t.end() , it);
 }
 
 TEST(Simple, test_leaves)
