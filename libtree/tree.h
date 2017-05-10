@@ -86,7 +86,7 @@ public:
       * @param list A List of children to be added to the node of the value <code>x</code>
       */
     Tree(const std::string&, const std::list<Tree*>& list);
-    Tree(const std::string&, const std::initializer_list<std::string>&);
+    Tree(const std::string&, const std::initializer_list<std::string>& list);
 
     ~Tree();
     Tree& operator=(const Tree&);

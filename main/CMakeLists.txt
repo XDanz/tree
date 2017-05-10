@@ -1,15 +1,23 @@
 find_package(Threads REQUIRED)
 
 set(MainServer_SRCS
-        ServerMain.cpp
+        main1.cpp
         )
 
 
-add_executable(server_start
+add_executable(main1
         ${MainServer_SRCS}
         )
 
-target_link_libraries(server_start
+add_executable(main2
+        main2.cpp
+        )
+
+add_executable(main
+        main.cpp
+        )
+
+target_link_libraries(main1
         libtree
         pthread
         )

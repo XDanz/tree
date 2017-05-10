@@ -99,7 +99,7 @@ Tree::Node* Tree::tree_clone(const Node* src_node, std::list<Node*>& nodes, Node
     Node* dst_node = new Node(src_node->value, parent);
     nodes.push_back(dst_node);
 
-    std::list<Node*>& src_children = src_node->children;
+    const std::list<Node*>& src_children = src_node->children;
     std::list<Node*>& dst_children = dst_node->children;
 
     /// Iterate over all children of the node that needs to cpy and clone each
@@ -344,14 +344,15 @@ bool Tree::isLeaf (Tree::Iterator it)
     return (*it.lit)->children.empty ();
 }
 
-std::list<Node*>::iterator Tree::litn(Tree::Node* p)
+std::list<Tree::Node*>::iterator Tree::litn(Node* p)
 {
     if (p == 0) return std::list<Node *>::iterator();
-    return find(nodes.begin(),nodes.end(),p);
+    return find(nodes.begin(), nodes.end(), p);
 }
-std::list<Node*>::iterator Tree::litp(Tree::Node* p)
+
+std::list<Tree::Node*>::iterator Tree::litp(Node* p)
 {
     if (p == 0 || p == nodes.front()) return std::list<Node *>::iterator();
     std::list<Node*> pplist = p->parent->children;
-    return find(pplist.begin(), pplist.end(),p);
+    return find(pplist.begin(), pplist.end(), p);
 }
