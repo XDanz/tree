@@ -27,7 +27,7 @@ Tree::Tree(const std::string& x)
 { nodes.push_back(new Node(x)); }
 
 /**
- * @brief Copy constructor. Cpy the entire <code>tree</code> into this tree
+ * @brief Copy constructor. Cpy the entire <tt>tree</tt> into this tree
  * @param tree [in] The tree to copy
  */
 Tree::Tree(const Tree& tree)
@@ -90,7 +90,8 @@ Tree::Tree (const std::string& x, const std::initializer_list<std::string>& list
  * cpy and nodes is intended to be filled ( from p ).
  *
  * @param src_node The node to copy
- * @param nodes
+ * @param nodes (this) node list
+ * @param parent The parent of the <tt>nodes</tt>
  **/
 Tree::Node* Tree::tree_clone(const Node* src_node, std::list<Node*>& nodes, Node* parent)
 {
